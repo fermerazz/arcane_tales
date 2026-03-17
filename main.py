@@ -1,5 +1,5 @@
 import pygame
-from menu import show_main_menu
+from menu import show_main_menu, show_character_creation
 
 def main():
     #initializing the mixer
@@ -15,14 +15,14 @@ def main():
     match player_choice:
         case "start":
             print("\nInitializing charcater creation...")
-            #WPlaceholders for now...
+            hero_name, hero_class = show_character_creation()
         case "load":
             print("\nLoading ancient scrolls (Saved File)...")
         case "exit":
             print("\nFarewell, traveler. The realm awaits your return.")
             pygame.mixer.music.fadeout(2000)
             pygame.time.wait(2000)
-            pygame-quit()
+            pygame.quit()
 
 if __name__ == "__main__":
     main()
