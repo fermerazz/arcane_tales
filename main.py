@@ -1,5 +1,5 @@
 import pygame
-from menu import show_main_menu, show_character_creation
+from menu import show_main_menu, show_character_creation, clear_screen
 from player import Player
 
 def main():
@@ -18,11 +18,17 @@ def main():
             print("\nInitializing character creation...")
             name, char_class = show_character_creation()
             hero = Player(name, char_class)
+            clear_screen()
+            hero.show_stats()
+            input("Are you ready, Traveler? Press Enter to Begin...")
+            
+            #After this, we will create the playable loop! Here comes the fun...
+            game_running = True
+            current_location = ""
 
-            print(f"\n--- Hero Stats ---")
-            print(f"Name: {hero.name} | Class: {hero.char_class.capitalize()}")
-            print(f"HP: {hero.current_hp}/{hero.max_hp} | STR: {hero.stats["str"]}")
-            print(f"Starting Gear: {hero.inventory}")
+            while game_running:
+                pass
+            
         case "load":
             print("\nLoading ancient scrolls (Saved File)...")
         case "exit":

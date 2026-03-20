@@ -27,22 +27,61 @@ class Player:
             case "vanguard":
                 self.stats["str"] += 5
                 self.stats["con"] += 3
-                self.inventory.append("Dented Greatshield", "Training sword")
+                self.inventory.extend(["Dented Greatshield", "Training sword"])
             case "runeweaver":
                 self.stats["int"] += 5
                 self.stats["dex"] += 3
-                self.inventory.append("Cracked Focus Crystal", "Runic Parchment")
+                self.inventory.extend(["Cracked Focus Crystal", "Runic Parchment"])
             case "apothecary":
                 self.stats["int"] += 5
                 self.stats["dex"] += 3
                 self.stats["lck"] += 2
-                self.inventory.append("Berbalistic Kit", "Glass Breaker")
+                self.inventory.extend(["Herbalistic Kit", "Glass Breaker"])
             case "silent_step":
                 self.stats["dex"] += 5
                 self.stats["per"] += 3
                 self.stats["lck"] += 3
-                self.inventory.append("Twin Daggers", "Lockpick Set")
+                self.inventory.extend(["Twin Daggers", "Lockpick Set"])
             case "spellblade":
                 self.stats["str"] += 5
                 self.stats["int"] += 3
-                self.inventory.append("Infused Rapider", "Whetsotne")
+                self.inventory.extend(["Infused Rapider", "Whetsotne"])
+    
+    def show_stats(self):
+        inv_str = ", ".join(self.inventory)
+        print(f"""
+========================================
+CHARACTER RECORD: {self.name.upper()}
+========================================
+ CLASS: {self.char_class.capitalize()}
+ LEVEL: {self.level}        XP: {self.xp}
+ HP:    {self.current_hp}/{self.max_hp}
+ MANA:  {self.current_mana}/{self.max_mana}
+----------------------------------------
+ STR: {self.stats['str']}\t INT: {self.stats['int']}
+ DEX: {self.stats['dex']}\t PER: {self.stats['per']}
+ CON: {self.stats['con']}\t LCK: {self.stats['lck']}
+----------------------------------------
+ INVENTORY: {inv_str}
+========================================
+              """)
+        
+    def scan_room(self, room_data):
+        print(f"Well well, it appears like {self.name} wants to scan the room, what secrets will we unveil?")
+        modifier = (self.stats["int"] - 10) // 2
+        roll = random.randint(1, 20)
+        total = roll + modifier
+
+        print(f"\n--- You rolled a {roll} (Total: {total}) ---")
+
+        if roll == 20:
+            print("--- CRITICAL SUCCESS! ---")
+            print(f"Your mind is in sync with the arcane. {room_data['secret_info']}")
+            return True
+        elif total >= room_data["dc"]:
+            print(f"Success! You notice something interesnting, what a keen eye... {room_data['secret_info']}")
+            return True
+        elif roll == 1:
+            print("\n--- CRITICAL FAIL! ---")
+            print(f"The arcane seems to be bothered by your mee existence...")
+            #I still need to decide which effects does the critical fail will have...
