@@ -199,7 +199,7 @@ You are about to enter the magical lands, but before...
                 print("Vibe: A scout and assassin who strikes before the enemy even knows they are there.")
                 print("Stats Focus: High Dexterity and Perception.")
                 print("Playstyle: High risk, high reward. They excel at evasion and striking from the shadows for massive critical damage, but they cannot take many hits in a fair fight.")
-                player_class = "silent"
+                player_class = "silent_step"
             
             case "5":
                 print("\n--- THE SPELLBLADE ---")

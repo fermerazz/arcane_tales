@@ -1,5 +1,6 @@
 import pygame
 from menu import show_main_menu, show_character_creation
+from player import Player
 
 def main():
     #initializing the mixer
@@ -14,8 +15,14 @@ def main():
 
     match player_choice:
         case "start":
-            print("\nInitializing charcater creation...")
-            hero_name, hero_class = show_character_creation()
+            print("\nInitializing character creation...")
+            name, char_class = show_character_creation()
+            hero = Player(name, char_class)
+
+            print(f"\n--- Hero Stats ---")
+            print(f"Name: {hero.name} | Class: {hero.char_class.capitalize()}")
+            print(f"HP: {hero.current_hp}/{hero.max_hp} | STR: {hero.stats["str"]}")
+            print(f"Starting Gear: {hero.inventory}")
         case "load":
             print("\nLoading ancient scrolls (Saved File)...")
         case "exit":
