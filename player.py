@@ -17,6 +17,7 @@ class Player:
         self.max_mana = 20 + (self.stats["int"] * 8)
         self.current_mana = self.max_mana
         self.inventory = []
+        self.roll_penalty = 0
         self.generate_stats()
 
     def generate_stats(self):
@@ -70,7 +71,11 @@ CHARACTER RECORD: {self.name.upper()}
         print(f"Well well, it appears like {self.name} wants to scan the room, what secrets will we unveil?")
         modifier = (self.stats["int"] - 10) // 2
         roll = random.randint(1, 20)
-        total = roll + modifier
+        total = roll + modifier - self.roll_penalty
+
+        if self.roll_penalty > 0:
+            print(f"Your brain fog substracts {self.roll_penalty} from your effort...")
+            self.roll_penalty = 0
 
         print(f"\n--- You rolled a {roll} (Total: {total}) ---")
 
@@ -78,10 +83,49 @@ CHARACTER RECORD: {self.name.upper()}
             print("--- CRITICAL SUCCESS! ---")
             print(f"Your mind is in sync with the arcane. {room_data['secret_info']}")
             return True
+        
+        elif roll == 1:
+            print("\n--- CRITICAL FAIL! ---")
+            print(f"The arcane seems to be bothered by your petty existence...")
+            print("You feel a little lightheaded, your mana decreases by 10 pts!")
+            self.current_mana = max(0, self.current_mana - 10)
+            self.roll_penalty = 5
+            return False
+        
         elif total >= room_data["dc"]:
             print(f"Success! You notice something interesnting, what a keen eye... {room_data['secret_info']}")
             return True
-        elif roll == 1:
-            print("\n--- CRITICAL FAIL! ---")
-            print(f"The arcane seems to be bothered by your mee existence...")
-            #I still need to decide which effects does the critical fail will have...
+        else:
+            print("The shadows hide their secrets well. Your find nothing unusual.")
+            return False
+    
+    def attack(self, target):
+        str_mod = (self.stats["str"] - 10) // 2
+        int_mod = (self.stats["int"] - 10) // 2
+
+        if self.char_class == "spellblade":
+            modifier = max(str_mod, int_mod)
+            print(f"{self.name} channels arcane energy through their blade...")
+        else:
+            modifier = str_mod
+
+        roll = random.randint(1, 20)
+        total = roll + modifier
+
+        print(f"{self.name} swings their weapon... (Roll: {roll} + {modifier} = {total})")
+        if total >= 10:
+            damage = random.randint(5, 15) + modifier
+            
+            if self.char_class == "spellblade" and self.current_mana >= 5:
+                self.current_mana -= 5
+                magical_bonus = int_mod
+                damage += magical_bonus
+                print(f"The blade glows purple! (+{magical_bonus} Magic Damage, -5 Mana)")
+            elif self.char_class == "spellblade":
+                print("Your mana is too low to infuse the blade!")
+
+            target.current_hp -= damage
+            print(f"HIT! You deal {damage} damage to {target.name}!")
+            print(f"[{target.name} HP: {max(0, target.current_hp)}/{target.max_hp}]")
+        else:
+            print(f"MISS! Your strike whistles through the air.")
