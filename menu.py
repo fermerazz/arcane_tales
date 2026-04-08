@@ -64,64 +64,6 @@ def show_main_menu(is_paused):
         else:
             print("Oh no! The ancient runes reject that option!. Try 1, 2, 3 or 4.")
 
-def show_pause_menu(hero, is_paused):
-    #This function displays the pause menu and captures user input
-    print(r""" 
-                   (   .                   _ _ _ _ _
-    (   .     .  .=##                      ]-I-I-I-[                    
-  .=##   .  (      ( .                     \ `  ' /        
-    ( .   .=##  .       .                   |'  []          
-  .     .   ( .    .        _----|          |.  '|           
-                             ----|_----|    | ' .|           
-    _ _ _ _ _ _      _----|      | ----|    | [] |         
-    ]-I-I-I-I-[       ----|      |     |    |. ` |          
-     \ `   '_/            |     / \    |    | /^\|            
-      []  `__|            ^    / ^ \   ^    | |*||                 
-      |__   ,|           / \  / ^ ^`\ / \   | ===|                 
-   ___| ___ ,|__        / ^  /=_=_=_=\ ^ \  |, `_|
-   I_I__I_I__I_I       (====(_________)_^___|____|____
-   \-\--|-|--/-/       |     I  [ ]__I I_I__|____I_I_|
-    |[] `    '|__   _  |_   _|`__  ._[  _-\--|-|--/-/
-   / \  [] ` .|  |-| |-| |-| |_| |_| |_| | []   [] |
-  <===>    `  |.            .      .     |    '    |
-  ] []|  `    |   []    --   []      `   |   [] '  |
-  <===>.  `   |  .   '  .       '  .[]   | '       |
-   \_/    .   |       .       '          |   `  [] |
-    | []    . |   .  .           ,  .    | ,    .  |
-    |    . '  |       . []  '            |    []'  |
-   / \   ..   |  `      .    .     `[]   | -   `   |
-  <===>      .|=-=-=-=-=-=-=-=-=-=-=-=-=-|    .   / \
-  ] []|` ` [] |`  .  .   _________   .   |-      <===>
-  <===>  `  ' | '   |||  |       |  |||  |  []   <===>
-   \_/     -- |   . |||  |       |  |||  | .  '   \_/
-  ./|' . . . .|. . .||||/|_______|\|||| /|. . . . .|\_    
-          
-            Hi Traveler, what do you wish to do?  
-        """)
-    print("1. Resume Game")
-    print("2. Save Game")
-    print("3. Exit to Main Menu")
-    print("4. Toggle Music")
-    print("5. Show Player Stats")
-
-    while True:
-        choice = input("What is your choice, wanderer? > ")
-
-        if choice == "1":
-            return "resume", is_paused
-        elif choice == "2":
-            return "save", is_paused
-        elif choice == "3":
-            return "main_menu", is_paused
-        elif choice == "4":
-            is_paused = toggle_music(is_paused)
-        elif choice == "5":
-            clear_screen()
-            hero.show_stats()
-            input("\nPress Enter to return to the pause menu...")
-            clear_screen()
-        else:
-            print("Uh oh! The book of knowledge declined that option!. Try 1, 2, 3 or 4.")
 
 def show_character_creation():
     print(r"""
